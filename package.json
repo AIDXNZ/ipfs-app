@@ -1,0 +1,17 @@
+{
+  "name": "ipfs-app",
+  "version": "0.1.0",
+  "main": "src/app.js",
+  "private": true,
+  "scripts": {
+    "test": "eslint .",
+    "start": "tabris serve"
+  },
+  "dependencies": {
+    "ipfs-pubsub-room": "^1.1.4",
+    "tabris": "^2.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.13.1"
+  }
+}
