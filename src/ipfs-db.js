@@ -1,16 +1,31 @@
-const IPFS = require('ipfs')
-const ipfs = new IPFS({
+const IPFS = require('ipfs');
+const OrbitDB = require('orbit-db');
+
+const ipfsOptions = {
   EXPERIMENTAL: {
-    pubsub: true,
-    dht: true
-  }
-})
+    pubsub: true
+  },
+};
 
-ipfs.once('ready', () => ipfs.id((err, info) =>{
-  if (err) {throw err}
-  console.log('IPFS node is ready')
-}))
+const ipfs = new IPFS(ipfsOptions);
 
-function repo () {
-  return 'ipfs/ipfs-app/' + Math.random()
-}
+ipfs.on('ready', () => {
+  const orbitdb = new OrbitDB(ipfs);
+
+  // Create / Open a database
+  const db = await orbitdb.log('hello')
+  await db.load()
+
+  // Listen for updates from peers
+  db.events.on('replicated', (address) => {
+    console.log(db.iterator({ limit: -1 }).collect())
+  })
+
+  // Add an entry
+  const hash = await db.add('world')
+  console.log(hash)
+
+  // Query
+  const result = db.iterator({ limit: -1 }).collect()
+  console.log(result)
+});
