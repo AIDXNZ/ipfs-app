@@ -29,3 +29,7 @@ ipfs.on('ready', () => {
   const result = db.iterator({ limit: -1 }).collect()
   console.log(result)
 });
+
+// Adds user to database 
+const userh = await db.add({ name: 'User1' })
+
