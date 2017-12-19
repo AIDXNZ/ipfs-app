@@ -1,7 +1,8 @@
 const IPFS = require('ipfs');
 const OrbitDB = require('orbit-db');
 
-const ipfsOptions = {
+const orbitdb = new OrbitDB(ipfs)
+const ipfs = {
   EXPERIMENTAL: {
     pubsub: true
   },
@@ -30,6 +31,5 @@ ipfs.on('ready', () => {
   console.log(result)
 });
 
-// Adds user to database 
+// Adds user to database
 const userh = await db.add({ name: 'User1' })
-
